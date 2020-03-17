@@ -1,0 +1,29 @@
+{
+  "regions": ["r1", "r2"],
+  "initial": {
+    "susceptible": {
+      "r1": 99.0,
+      "r2": 200.0
+    },
+    "infected": {
+      "r1": 1.0,
+      "r2": 0.0
+    },
+    "recovered": {
+      "r1": 0.0,
+      "r2": 0.0
+    }
+  },
+  "parameters": {
+    "beta": {
+      "entries": [
+        {"row": "r1", "col": "r1", "value": 0.04},
+        {"row": "r1", "col": "r2", "value": 0.01},
+        {"row": "r2", "col": "r2", "value": 0.1},
+        {"row": "r2", "col": "r1", "value": 0.005}
+      ]
+    },
+    "gamma": 0.07143
+  },
+  "times": [0.0, 7.0, 14.0, 21.0, 28.0, 35.0]
+}

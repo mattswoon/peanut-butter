@@ -1,3 +1,4 @@
+from scipy.integrate import solve_lvp
 
 
 def model(S0, I0, R0, times, beta, N, gamma, indexer):
