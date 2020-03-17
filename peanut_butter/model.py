@@ -18,13 +18,25 @@ def model(S0, I0, R0, times, beta, N, gamma, indexer):
             * S[i] - the susceptible population in the ith region
             * I[i] - the infected population in the ith region
             * R[i] - the recovered population in the ith region
-            * beta[i, j] - the contact rate of someone in region i with someone in region j
+            * beta[i, j] - the transmission rate of someone in region i with someone in region j
             * gamma - the recovery rate
+
+        This model adds spatial compartments to a classic SIR model, so that
+        S, I and R are multi-dimensional vectors. Unlike other spatially
+        separated SIR models, the population doesn't move i.e. the total population
+        in each region remains fixed, they can merely infect across region boundaries.
+        The reasoning here is that the model operates on a time scale of a day
+        (t has units of days) and each agent that leaves their home region returns
+        to their home region by the end of the day - so they may carry the
+        infection into a neighbouring region, come into contact with a susceptible
+        and then return home, or alternatively, a susceptible may visit a
+        neighbouring region, come into contact with an infected agent and then
+        return home. Either process transmits the infection across boundary lines.
         """
         S, I, R = indexer.unpack(y)
 
-        dS = -np.dot(beta,  I * S) / N
-        dI = np.dot(beta, I * S) / N - gamma * I
+        dS = -np.dot(beta,  I) * S / N
+        dI = np.dot(beta, I) * S / N - gamma * I
         dR = gamma * I
 
         return indexer.pack(dS, dI, dR)
