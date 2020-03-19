@@ -35,8 +35,8 @@ def model(S0, I0, R0, times, beta, N, gamma, indexer):
         """
         S, I, R = indexer.unpack(y)
 
-        dS = -np.dot(beta,  I) * S / N
-        dI = np.dot(beta, I) * S / N - gamma * I
+        dS = -np.dot(I, np.dot(beta.T, S)) / N
+        dI = np.dot(I, np.dot(beta.T, S)) / N - gamma * I
         dR = gamma * I
 
         return indexer.pack(dS, dI, dR)
